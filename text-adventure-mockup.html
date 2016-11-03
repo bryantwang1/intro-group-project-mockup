@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Text Adventure Mockup</title>
+
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        text-align: center;
+        margin-left: 15vw;
+        margin-right: 15vw;
+      }
+
+      #map p {
+        letter-spacing: 2em;
+      }
+
+      #map em {
+        font-style: normal;
+        font-weight: bold;
+        color: orange;
+      }
+
+      #map strong {
+        color: blue;
+      }
+
+      .green {
+        color: lightgreen;
+      }
+
+      .yellow {
+        color: yellow;
+      }
+
+      .red {
+        color: red;
+      }
+
+      .form-control {
+        background-color: black;
+        color: #00ff77;
+        width: 300px;
+        padding: 5px;
+        margin-bottom: 2vh;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Room Name</h1>
+    <div id="map">
+      <p class="green">^^^^^^<span class="yellow">@</span>^^^^^</p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span>######<strong>&amp;</strong>###<span class="green">^</span></p>
+      <p><span class="green">^</span>######<strong>&amp;</strong>##<strong>&amp;</strong><span class="green">^</span></p>
+      <p><span class="green">^</span><span class="red">&yen;</span>#####<strong>&amp;</strong>###<span class="green">^</span></p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span><em>&reg;</em>####<em id="player">!</em><strong>&amp;</strong>###<span class="green">^</span></p>
+      <p class="green">^^^^^^<span class="yellow">@</span>^^^^^</p>
+    </div>
+
+    <div id="text">
+      <p class="last-action">You pass through the door.</p>
+      <p class="room-description">You find yourself in a dark room, several paces wide and deep. The door you entered from is on the south wall, a side table sits beside it. Along the west wall you see a fireplace. Near the center of the room is a dusty couch, facing a tv on the eastern side of the room. Something with several eyes peers at you from the darkness in the southwest corner.</p>
+      <p class="atmospheric-event">You hear wings fluttering somewhere. Probably a bat.</p>
+      <p class="local-area">A side table with a single drawer and an antique lamp upon it is beside you to the east.</p>
+      <p>Possible actions: <span class="green">NORTH, WEST, LOOK, SEARCH, INVENTORY, HELP</span></p>
+      <form>
+        <div class="form-group">
+          <input id="player-action" class="form-control" type="text" placeholder="command here">
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
