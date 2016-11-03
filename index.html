@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Text Adventure Mockup</title>
+    <script src="js/jquery-3.1.1.js"></script>
 
     <style>
       body {
@@ -13,17 +14,17 @@
         margin-right: 15vw;
       }
 
-      #map p {
+      .map p {
         letter-spacing: 2em;
       }
 
-      #map em {
+      .map em {
         font-style: normal;
         font-weight: bold;
         color: orange;
       }
 
-      #map strong {
+      .map strong {
         color: blue;
       }
 
@@ -44,13 +45,21 @@
         color: #00ff77;
         width: 300px;
         padding: 5px;
-        margin-bottom: 2vh;
+        margin-bottom: 1vh;
+      }
+
+      #map-2, #text-2 {
+        display: none;
+      }
+
+      #action-area p {
+        color: #00ff77;
       }
     </style>
   </head>
   <body>
     <h1>Room Name</h1>
-    <div id="map">
+    <div class="map" id="map-1">
       <p class="green">^^^^^^<span class="yellow">@</span>^^^^^</p>
       <p><span class="green">^</span>##########<span class="green">^</span></p>
       <p><span class="green">^</span>##########<span class="green">^</span></p>
@@ -64,10 +73,24 @@
       <p><span class="green">^</span><em>&reg;</em>####<em id="player">!</em><strong>&amp;</strong>###<span class="green">^</span></p>
       <p class="green">^^^^^^<span class="yellow">@</span>^^^^^</p>
     </div>
+    <div class="map" id="map-2">
+      <p class="green">^^^^^^<span class="yellow">@</span>^^^^^</p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span>######<strong>&amp;</strong>###<span class="green">^</span></p>
+      <p><span class="green">^</span>######<strong>&amp;</strong>##<strong>&amp;</strong><span class="green">^</span></p>
+      <p><span class="green">^</span><span class="red">&yen;</span>#####<strong>&amp;</strong>###<span class="green">^</span></p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span>##########<span class="green">^</span></p>
+      <p><span class="green">^</span>#####<em id="player">!</em>####<span class="green">^</span></p>
+      <p><span class="green">^</span><em>&reg;</em>#####<strong>&amp;</strong>###<span class="green">^</span></p>
+      <p class="green">^^^^^^<span class="yellow">@</span>^^^^^</p>
+    </div>
 
-    <div id="text">
+    <div class="text" id="text-1">
       <p class="last-action">You pass through the door.</p>
-      <p class="room-description">You find yourself in a dark room, several paces wide and deep. The door you entered from is on the south wall, a side table sits beside it. Along the west wall you see a fireplace. Near the center of the room is a dusty couch, facing a tv on the eastern side of the room. Something with several eyes peers at you from the darkness in the southwest corner.</p>
+      <p class="room-description">You find yourself in a dark room, several paces wide and deep. The door you entered from is on the south wall, a side table sits beside it. Another door is set within the north wall. Along the west wall you see a fireplace. Near the center of the room is a dusty couch, facing a tv on the eastern side of the room. Something with several eyes peers at you from the darkness in the southwest corner.</p>
       <p class="atmospheric-event">You hear wings fluttering somewhere. Probably a bat.</p>
       <p class="local-area">A side table with a single drawer and an antique lamp upon it is beside you to the east.</p>
       <p>Possible actions: <span class="green">NORTH, WEST, LOOK, SEARCH, INVENTORY, HELP</span></p>
@@ -76,6 +99,70 @@
           <input id="player-action" class="form-control" type="text" placeholder="command here">
         </div>
       </form>
+      <div id="action-area">
+      </div>
     </div>
+
+    <div class="text" id="text-2">
+      <p class="last-action">You move north.</p>
+      <p class="room-description">You find yourself in a dark room, several paces wide and deep. The door you entered from is on the south wall, a side table sits beside it. Another door is set within the north wall. Along the west wall you see a fireplace. Near the center of the room is a dusty couch, facing a tv on the eastern side of the room. Something with several eyes peers at you from the darkness in the southwest corner.</p>
+      <p class="atmospheric-event">Something small with dark skin(fur?) skitters across the floor in front of you.</p>
+      <p class="local-area">A side table with a single drawer and an antique lamp upon it is beside you to the southeast.</p>
+      <p>Possible actions: <span class="green">NORTH, EAST, SOUTH, WEST, LOOK, INVENTORY, HELP</span></p>
+      <form>
+        <div class="form-group">
+          <input id="player-action" class="form-control" type="text" placeholder="command here">
+        </div>
+      </form>
+      <div id="action-area">
+      </div>
+    </div>
+
+    <script>
+      $(function() {
+        var inventory = "empty";
+        $("form").submit(function(event) {
+          event.preventDefault();
+
+          var playerAction = $("#player-action").val().toLowerCase();
+          if(playerAction === "north") {
+            $("#map-1").hide();
+            $("#map-2").show();
+            $("#text-1").hide();
+            $("#text-2").show();
+            $("#action-area").empty();
+          } else if(playerAction === "look") {
+            $("#action-area").empty();
+            $("#action-area").append("<p>You examine the room more closely. The tv isn't plugged in, but a faint static emanates from the screen. The couch is torn to shreds, possibly by a knife. Faintly glowing embers pulsate inside the fireplace. The corners are filled with cobwebs and dead cockroaches litter the floor. The creature peering at you from the southwest corner is still hidden in the shadows.</p>");
+          } else if(playerAction === "search") {
+            $("#action-area").empty();
+            $("#action-area").append("<p>You search the side table beside you. Inside its drawer you find a lighter. It has been added to your inventory.</p>");
+            inventory = "lighter";
+          } else if(playerAction === "west") {
+            $("#action-area").empty();
+            $("#action-area").append("<p>Moving west isn't implemented in this mock-up. Try north.</p>");
+          } else if(playerAction === "inventory") {
+          $("#action-area").empty();
+          $("#action-area").append("<p>Your inventory contains: " + inventory + "</p>");
+          } else if(playerAction === "help") {
+            $("#action-area").empty();
+            $("#action-area").append("<p>Type one of the possible actions into the text input field. It doesn't have to be capitalized but it must contain the same letters. To use an item in your inventory, type \"use name-of-item\".</p><p>Remember this is just a mock-up.</p>");
+          } else if(playerAction === "use lighter") {
+            if(inventory === "lighter") {
+              $("#action-area").empty();
+              $("#action-area").append("<p>The lighter emanates a tiny flame, illuminating the area around you ever so slightly.</p>");
+            } else {
+              $("#action-area").empty();
+              $("#action-area").append("<p>You can't do that. Your inventory is empty. Type inventory to see what's inside.</p>");
+            }
+          } else {
+            $("#action-area").empty();
+            $("#action-area").append("<p>You can't do that. Type help if you don't know what you're doing.</p>");
+          }
+
+          $("#player-action").val("");
+        });
+      });
+    </script>
   </body>
 </html>
